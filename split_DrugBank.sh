@@ -1,7 +1,9 @@
 #identify the lines where every Nth drug item ends
 grep -n ^"</drug>" DrugBank_full_database_v5_1_8_24_02_2021.xml | awk 'NR % 22 == 0' | sed "s/\:/ /g" | awk '{print $1}' | sed -e '1i\2' > tmp.txt1
 tail -n +2 tmp.txt1 > tmp.txt2
-paste tmp.txt1 tmp.txt2 | awk '(NF==2)' > tmp.txt
+n=`awk 'END{print NR}' DrugBank_full_database_v5_1_8_24_02_2021.xml`
+echo $n >> tmp.txt2
+paste tmp.txt1 tmp.txt2 > tmp.txt
 rm tmp.txt1 tmp.txt2
 
 #create single xml files
